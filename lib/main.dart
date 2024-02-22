@@ -48,15 +48,15 @@ class _MainState extends State<Main> {
 
     currentPageIndex = 0;
 
+    pageController = PageController(initialPage: currentPageIndex);
+
     pages = [
-      const HomePage(),
+      HomePage(changePage: update),
       const AccountPage(),
       const NotificationPage(),
       const SearchPage(),
       const CartPage(),
     ];
-
-    pageController = PageController(initialPage: currentPageIndex);
   }
 
   @override
@@ -77,6 +77,7 @@ class _MainState extends State<Main> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: [0, 1, 2, 4].contains(currentPageIndex) ? buildAppBar() : null,
+      extendBody: true,
       body: PageView(
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
@@ -128,7 +129,8 @@ class _MainState extends State<Main> {
         // mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           IconButton(
-            padding: const EdgeInsets.symmetric(vertical: 0.0),
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
             onPressed: () => update(0),
             icon: currentPageIndex == 0 ?
               buildNavigationIcon(const Icon(Icons.home), "Home", 0) :
@@ -136,7 +138,8 @@ class _MainState extends State<Main> {
             color: currentPageIndex == 0 ? kHighlightColor : kTextOverlay,
           ),
           IconButton(
-            padding: const EdgeInsets.symmetric(vertical: 0.0),
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
             onPressed: () => update(1),
             icon: currentPageIndex == 1 ?
               buildNavigationIcon(const Icon(Icons.account_circle), "You", 1) :
@@ -144,7 +147,8 @@ class _MainState extends State<Main> {
             color: currentPageIndex == 1 ? kHighlightColor : kTextOverlay,
           ),
           IconButton(
-            padding: const EdgeInsets.symmetric(vertical: 0.0),
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
             onPressed: () => update(2),
             icon: currentPageIndex == 2 ?
               buildNavigationIcon(
@@ -168,7 +172,8 @@ class _MainState extends State<Main> {
             color: currentPageIndex == 2 ? kHighlightColor : kTextOverlay,
           ),
           IconButton(
-            padding: const EdgeInsets.symmetric(vertical: 0.0),
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
             onPressed: () => update(3),
             icon: currentPageIndex == 3 ?
               buildNavigationIcon(const Icon(Icons.search_rounded), "Search", 3) :

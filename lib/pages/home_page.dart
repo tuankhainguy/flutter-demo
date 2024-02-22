@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:demo/models/product.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final void Function(int) changePage;
+  const HomePage({Key? key, required this.changePage}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomeState();
@@ -30,10 +31,7 @@ class _HomeState extends State<HomePage> with AutomaticKeepAliveClientMixin {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: GestureDetector(
-        onTap: () {
-          setState(() {
-          });
-        },
+        onTap: () => widget.changePage(3),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.0),
@@ -147,37 +145,43 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.all(kDefaultPadding),
-            decoration: BoxDecoration(
-              color: product.color,
-              borderRadius: BorderRadius.circular(16.0)
+    return GestureDetector(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(kDefaultPadding / 4),
+              decoration: BoxDecoration(
+                color: kLightBackgroundColor,
+                borderRadius: BorderRadius.circular(16.0)
+              ),
+              child: Image.asset(
+                product.image,
+                fit: BoxFit.fitWidth,
+              ),
             ),
-            child: Image.asset(product.image),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 4),
-          child: Text(
-            product.title,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 4),
+            child: Text(
+              product.title,
+              style: const TextStyle(
+                color: kTextLight,
+                fontSize: 15.0,
+              ),
+            ),
+          ),
+          Text(
+            "\$${product.price.toString()}",
             style: const TextStyle(
-              color: kTextLight,
-              fontSize: 15.0,
+              color: kTextOverlay,
+              fontSize: 12.0,
             ),
           ),
-        ),
-        Text(
-          "\$${product.price.toString()}",
-          style: const TextStyle(
-            color: kTextOverlay,
-            fontSize: 12.0,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
