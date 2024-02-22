@@ -40,8 +40,6 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> {
   late int currentPageIndex;
   late PageController pageController;
-  // int notificationNum = 2;
-
   late List<Widget> pages;
 
   @override
@@ -109,7 +107,9 @@ class _MainState extends State<Main> {
       actions: <Widget>[
         IconButton(
           onPressed: () => update(4),
-          icon: currentPageIndex == 4 ? Icon(Icons.shopping_cart) : Icon(Icons.shopping_cart_outlined),
+          icon: currentPageIndex == 4 ?
+            const Icon(Icons.shopping_cart) :
+            const Icon(Icons.shopping_cart_outlined),
           color: kTextLight,
         ),
         const SizedBox(width: kDefaultPadding / 2),
