@@ -125,89 +125,82 @@ class _MainState extends State<Main> {
       surfaceTintColor: Colors.transparent,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              IconButton(
-                onPressed: () => update(0),
-                icon: currentPageIndex == 0 ? Icon(Icons.home) : Icon(Icons.home_outlined),
-                color: currentPageIndex == 0 ? kHighlightColor : kTextOverlay,
-                visualDensity: const VisualDensity(vertical: -4.0),
-              ),
-              Text(
-                "Home",
-                style: TextStyle(
-                  color: currentPageIndex == 0 ? kHighlightColor : kTextOverlay,
-                  fontSize: 12.0,
-                ),
-              ),
-            ],
+        // mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          IconButton(
+            padding: const EdgeInsets.symmetric(vertical: 0.0),
+            onPressed: () => update(0),
+            icon: currentPageIndex == 0 ?
+              buildNavigationIcon(const Icon(Icons.home), "Home", 0) :
+              buildNavigationIcon(const Icon(Icons.home_outlined), "Home", 0),
+            color: currentPageIndex == 0 ? kHighlightColor : kTextOverlay,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              IconButton(
-                onPressed: () => update(1),
-                icon: currentPageIndex == 1 ? Icon(Icons.account_circle) : Icon(Icons.account_circle_outlined),
-                color: currentPageIndex == 1 ? kHighlightColor : kTextOverlay,
-                visualDensity: const VisualDensity(vertical: -4.0),
-              ),
-              Text(
-                "You",
-                style: TextStyle(
-                  color: currentPageIndex == 1 ? kHighlightColor : kTextOverlay,
-                  fontSize: 12.0,
-                ),
-              ),
-            ],
+          IconButton(
+            padding: const EdgeInsets.symmetric(vertical: 0.0),
+            onPressed: () => update(1),
+            icon: currentPageIndex == 1 ?
+              buildNavigationIcon(const Icon(Icons.account_circle), "You", 1) :
+              buildNavigationIcon(const Icon(Icons.account_circle_outlined), "You", 1),
+            color: currentPageIndex == 1 ? kHighlightColor : kTextOverlay,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              IconButton(
-                onPressed: () => update(2),
-                icon:  currentPageIndex == 2 ? const Badge(
-                  isLabelVisible: false,
-                  child: Icon(Icons.notifications_sharp),
-                ) : const Badge(
-                  isLabelVisible: true,
-                  backgroundColor: kNotificationColor,
-                  child: Icon(Icons.notifications_outlined),
+          IconButton(
+            padding: const EdgeInsets.symmetric(vertical: 0.0),
+            onPressed: () => update(2),
+            icon: currentPageIndex == 2 ?
+              buildNavigationIcon(
+                buildNotificationBadge(
+                  true,
+                  Icons.notifications_sharp,
+                  Colors.transparent
                 ),
-                color: currentPageIndex == 2 ? kHighlightColor : kTextOverlay,
-                visualDensity: const VisualDensity(vertical: -4.0),
-              ),
-              Text(
-                "Cart",
-                style: TextStyle(
-                  color: currentPageIndex == 2 ? kHighlightColor : kTextOverlay,
-                  fontSize: 12.0,
+                "Notification",
+                2
+              ) :
+              buildNavigationIcon(
+                buildNotificationBadge(
+                  true,
+                  Icons.notifications_outlined,
+                  kNotificationColor
                 ),
+                "Notification",
+                2
               ),
-            ],
+            color: currentPageIndex == 2 ? kHighlightColor : kTextOverlay,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              IconButton(
-                onPressed: () => update(3),
-                icon: currentPageIndex == 3 ? Icon(Icons.search_sharp) : Icon(Icons.search_outlined),
-                color: currentPageIndex == 3 ? kHighlightColor : kTextOverlay,
-                visualDensity: const VisualDensity(vertical: -4.0),
-              ),
-              Text(
-                "Search",
-                style: TextStyle(
-                  color: currentPageIndex == 3 ? kHighlightColor : kTextOverlay,
-                  fontSize: 12.0,
-                ),
-              ),
-            ],
+          IconButton(
+            padding: const EdgeInsets.symmetric(vertical: 0.0),
+            onPressed: () => update(3),
+            icon: currentPageIndex == 3 ?
+              buildNavigationIcon(const Icon(Icons.search_rounded), "Search", 3) :
+              buildNavigationIcon(const Icon(Icons.search_outlined), "Search", 3),
+            color: currentPageIndex == 3 ? kHighlightColor : kTextOverlay,
           ),
         ],
       )
+    );
+  }
+
+  Column buildNavigationIcon(Widget buttonIcon, String label, int pageIndex) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        buttonIcon,
+        Text(
+          label,
+          style: TextStyle(
+            color: currentPageIndex == pageIndex ? kHighlightColor : kTextOverlay,
+            fontSize: 12.0,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Badge buildNotificationBadge(bool isVisible, IconData buttonIcon, Color? color) {
+    return Badge(
+      isLabelVisible: isVisible,
+      backgroundColor: color,
+      child: Icon(buttonIcon),
     );
   }
 }
