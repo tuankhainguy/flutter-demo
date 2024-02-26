@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+
+typedef ViewCallBack = void Function();
+typedef ViewSetState = void Function(Widget widget);
+typedef PageCallBack = void Function(int selectedPageIndex);
+
 const kBaseColor = Color(0xff1e1e2e);
 const kBackgroundColor = Color(0xff11111b);
 const kLightBackgroundColor = Color(0xffcdd6f4);

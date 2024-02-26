@@ -51,7 +51,7 @@ class _MainState extends State<Main> {
     pageController = PageController(initialPage: currentPageIndex);
 
     pages = [
-      HomePage(changePage: update),
+      HomePage(pageJump: pageJump),
       const AccountPage(),
       const NotificationPage(),
       const SearchPage(),
@@ -65,7 +65,7 @@ class _MainState extends State<Main> {
     super.dispose();
   }
 
-  void update(int selectedPageIndex) {
+  void pageJump(int selectedPageIndex) {
     setState(() {
       currentPageIndex = selectedPageIndex;
       pageController.jumpToPage(selectedPageIndex);
@@ -107,7 +107,7 @@ class _MainState extends State<Main> {
       // ),
       actions: <Widget>[
         IconButton(
-          onPressed: () => update(4),
+          onPressed: () => pageJump(4),
           icon: currentPageIndex == 4 ?
             const Icon(Icons.shopping_cart) :
             const Icon(Icons.shopping_cart_outlined),
@@ -131,7 +131,7 @@ class _MainState extends State<Main> {
           IconButton(
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-            onPressed: () => update(0),
+            onPressed: () => pageJump(0),
             icon: currentPageIndex == 0 ?
               buildNavigationIcon(const Icon(Icons.home), "Home", 0) :
               buildNavigationIcon(const Icon(Icons.home_outlined), "Home", 0),
@@ -140,7 +140,7 @@ class _MainState extends State<Main> {
           IconButton(
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-            onPressed: () => update(1),
+            onPressed: () => pageJump(1),
             icon: currentPageIndex == 1 ?
               buildNavigationIcon(const Icon(Icons.account_circle), "You", 1) :
               buildNavigationIcon(const Icon(Icons.account_circle_outlined), "You", 1),
@@ -149,7 +149,7 @@ class _MainState extends State<Main> {
           IconButton(
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-            onPressed: () => update(2),
+            onPressed: () => pageJump(2),
             icon: currentPageIndex == 2 ?
               buildNavigationIcon(
                 buildNotificationBadge(
@@ -174,7 +174,7 @@ class _MainState extends State<Main> {
           IconButton(
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-            onPressed: () => update(3),
+            onPressed: () => pageJump(3),
             icon: currentPageIndex == 3 ?
               buildNavigationIcon(const Icon(Icons.search_rounded), "Search", 3) :
               buildNavigationIcon(const Icon(Icons.search_outlined), "Search", 3),
