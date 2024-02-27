@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Product {
   final String title, image, description;
   final int id, price, size;
-  // final Color color;
+  final List<Color> color;
   Product({
     required this.id,
     required this.title,
@@ -11,7 +11,7 @@ class Product {
     required this.description,
     required this.price,
     required this.size,
-    // required this.color,
+    required this.color,
   });
 }
 
@@ -23,7 +23,7 @@ List<Product> hotDeals= [
     description: "First bag",
     price: 100,
     size: 10,
-    // color: Colors.blue,
+    color: [Colors.blue, Colors.red],
   ),
 ];
 
@@ -35,7 +35,7 @@ List<Product> newArrivals = [
     description: "First bag",
     price: 100,
     size: 10,
-    // color: Colors.blue,
+    color: [Colors.blue, Colors.red],
   ),
 ];
 
@@ -47,7 +47,7 @@ List<Product> handbags = [
     description: "Blue handbag",
     price: 100,
     size: 10,
-    // color: Colors.blue,
+    color: [Colors.blue, Colors.red],
   ),
   Product(
     id: 2,
@@ -56,7 +56,7 @@ List<Product> handbags = [
     description: "Green handbag",
     price: 90,
     size: 10,
-    // color: Colors.green,
+    color: [Colors.green],
   ),
   Product(
     id: 3,
@@ -65,7 +65,7 @@ List<Product> handbags = [
     description: "Yellow handbag",
     price: 120,
     size: 10,
-    // color: Colors.yellow,
+    color: [Colors.yellow],
   ),
   Product(
     id: 4,
@@ -74,7 +74,7 @@ List<Product> handbags = [
     description: "Red handbag",
     price: 200,
     size: 10,
-    // color: Colors.red,
+    color: [Colors.red],
   ),
   Product(
     id: 5,
@@ -83,7 +83,7 @@ List<Product> handbags = [
     description: "First bag",
     price: 300,
     size: 10,
-    // color: Colors.black,
+    color: [Colors.black],
   ),
   Product(
     id: 6,
@@ -92,54 +92,62 @@ List<Product> handbags = [
     description: "Brown handbag",
     price: 210,
     size: 10,
-    // color: Colors.brown,
+    color: [Colors.brown],
   ),
 ];
 
 List<Product> backpacks = [
   Product(
-    id: 1,
+    id: 7,
     title: "Backpack 1",
     image: "assets/images/green_backpack.png",
     description: "First backpack",
     price: 200,
     size: 10,
-    // color: Colors.green,
+    color: [Colors.green],
   ),
 ];
 
 List<Product> pc = [
   Product(
-    id: 1,
+    id: 8,
     title: "PC 1",
     image: "assets/images/red_pc.png",
     description: "First PC",
     price: 3000,
     size: 10,
-    // color: Colors.red,
+    color: [Colors.red],
   ),
 ];
 
 List<Product> mobile = [
   Product(
-    id: 1,
+    id: 9,
     title: "Phone 1",
     image: "assets/images/yellow_phone.png",
     description: "First phone",
     price: 1500,
     size: 10,
-    // color: Colors.amber,
+    color: [Colors.amber],
   ),
 ];
 
 List<Product> accessories = [
   Product(
-    id: 1,
+    id: 10,
     title: "Watch 1",
     image: "assets/images/orange_watch.png",
     description: "First accessory",
     price: 900,
     size: 10,
-    // color: Colors.orange,
+    color: [Colors.orange],
   ),
+];
+
+List<Product> search = [
+  ...handbags,
+  ...backpacks,
+  ...pc,
+  ...mobile,
+  ...accessories,
 ];

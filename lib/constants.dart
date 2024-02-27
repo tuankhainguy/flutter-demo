@@ -13,5 +13,7 @@ const kTextLight = Color(0xffcdd6f4);
 const kTextOverlay = Color(0xff6c7086);
 const kHighlightColor = Color(0xff89b4fa);
 const kNotificationColor = Color(0xfff38ba8);
+const kAddToCartColor = Color(0xff89b4fa);
+const kCheckOutColor = Color(0xffb4befe);
 
 const double kDefaultPadding = 20.0;

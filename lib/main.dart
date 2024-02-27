@@ -52,10 +52,10 @@ class _MainState extends State<Main> {
 
     pages = [
       HomePage(pageJump: pageJump),
-      const AccountPage(),
-      const NotificationPage(),
+      AccountPage(pageJump: pageJump),
+      NotificationPage(pageJump: pageJump),
       const SearchPage(),
-      const CartPage(),
+      CartPage(pageJump: pageJump),
     ];
   }
 
@@ -76,7 +76,7 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      appBar: [0, 1, 2, 4].contains(currentPageIndex) ? buildAppBar() : null,
+      // appBar: [0, 1, 2, 4].contains(currentPageIndex) ? buildAppBar() : null,
       extendBody: true,
       body: PageView(
         controller: pageController,

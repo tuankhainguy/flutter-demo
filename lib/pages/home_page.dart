@@ -2,11 +2,8 @@ import 'package:demo/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:demo/models/product.dart';
 import 'package:demo/pages/components/item.dart';
+import 'package:demo/pages/components/app_bar.dart';
 
-
-typedef ViewCallBack = void Function();
-typedef ViewSetState = void Function(Widget widget);
-typedef PageCallBack = void Function(int selectedPageIndex);
 
 class HomePage extends StatefulWidget {
   final PageCallBack pageJump;
@@ -18,8 +15,9 @@ class HomePage extends StatefulWidget {
 
 class _HomeState extends State<HomePage> with AutomaticKeepAliveClientMixin {
 
-  late PageController pageViewer;
+  late PageController itemViewer;
   late List<Widget> views;
+  bool viewing = false;
   final int homePageIndex = 0;
   final int itemPageIndex = 1;
 
@@ -29,15 +27,24 @@ class _HomeState extends State<HomePage> with AutomaticKeepAliveClientMixin {
 
   void itemView() {
     setState(() {
-      views.length > 1 ? views.removeRange(1, views.length - 1) : null;
-      pageViewer.jumpToPage(itemPageIndex);
+      itemViewer.animateToPage(
+        itemPageIndex,
+        duration: Durations.short4,
+        curve: Curves.easeInOut,
+      );
+      viewing = true;
     });
   }
 
   void returnHome() {
     setState(() {
-      pageViewer.jumpToPage(homePageIndex);
-      views.length > 1 ? views.removeRange(1, views.length - 1) : null;
+      itemViewer.animateToPage(
+        homePageIndex,
+        duration: Durations.short4,
+        curve: Curves.easeInOut,
+      );
+      views.length > 1 ? views.removeLast() : null;
+      viewing = false;
     });
   }
 
@@ -45,7 +52,7 @@ class _HomeState extends State<HomePage> with AutomaticKeepAliveClientMixin {
   void initState() {
     super.initState();
 
-    pageViewer = PageController(initialPage: homePageIndex);
+    itemViewer = PageController(initialPage: homePageIndex);
     views = [
       HomeView(
         pageJump: widget.pageJump,
@@ -58,7 +65,7 @@ class _HomeState extends State<HomePage> with AutomaticKeepAliveClientMixin {
 
   @override
   void dispose() {
-    pageViewer.dispose();
+    itemViewer.dispose();
     super.dispose();
   }
 
@@ -68,9 +75,13 @@ class _HomeState extends State<HomePage> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return PageView(
-      controller: pageViewer,
-      children: views,
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: buildAppBar(widget.pageJump, 0, viewing, returnHome),
+      body: PageView(
+        controller: itemViewer,
+        children: views,
+      ),
     );
   }
 }
@@ -149,7 +160,7 @@ class Categories extends StatefulWidget {
   State<Categories> createState() => _CategoriesState();
 }
 
-class _CategoriesState extends State<Categories> {
+class _CategoriesState extends State<Categories> with AutomaticKeepAliveClientMixin{
 
   final Map<String, List<Product>> categories = {
     "Hot deals!": hotDeals,
@@ -162,7 +173,11 @@ class _CategoriesState extends State<Categories> {
   };
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return DefaultTabController(
       length: categories.length,
       child: Expanded(

@@ -1,12 +1,7 @@
-import 'package:demo/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:demo/constants.dart';
 import 'package:demo/models/product.dart';
 
-
-typedef ViewCallBack = void Function();
-typedef ViewSetState = void Function(Widget widget);
-typedef PageCallBack = void Function(int selectedPageIndex);
 
 class ItemGrid extends StatelessWidget {
   final List<Product> products;
@@ -62,9 +57,7 @@ class ItemCard extends StatelessWidget {
         addItem(
           ItemPage(
             product: product,
-            addItem: addItem,
-            itemView: itemView,
-            returnHome: returnHome
+            returnHome: returnHome,
           )
         );
         itemView();
@@ -82,12 +75,12 @@ class ItemCard extends StatelessWidget {
               ),
               child: Image.asset(
                 product.image,
-                fit: BoxFit.fitWidth,
+                fit: BoxFit.contain,
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 4),
+            padding: const EdgeInsets.only(top: kDefaultPadding / 3),
             child: Text(
               product.title,
               style: const TextStyle(
@@ -111,13 +104,10 @@ class ItemCard extends StatelessWidget {
 
 class ItemPage extends StatefulWidget {
   final Product product;
-  final ViewSetState addItem;
-  final ViewCallBack itemView, returnHome;
+  final ViewCallBack returnHome;
   const ItemPage({
     Key? key,
     required this.product,
-    required this.addItem,
-    required this.itemView,
     required this.returnHome,
   }) : super(key: key);
 
@@ -129,14 +119,230 @@ class _ItemPageState extends State<ItemPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        width: 500,
-        height: 500,
-        child: Image.asset(
-          widget.product.image,
-          fit: BoxFit.fitWidth,
-        ),
-      ),
+      backgroundColor: kLightBackgroundColor,
+      body: ItemPageBody(product: widget.product),
+    );
+  }
+}
+
+class ItemPageBody extends StatefulWidget{
+  final Product product;
+  const ItemPageBody({Key? key, required this.product}) : super(key: key);
+
+  @override
+  State<ItemPageBody> createState() => _ItemPageBodyState();
+}
+
+class _ItemPageBodyState extends State<ItemPageBody> {
+  int currentColorIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints viewportConstraints) {
+        return SingleChildScrollView(
+          child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(kDefaultPadding),
+                child: SizedBox(
+                  height: size.height * 0.4,
+                  child: Image.asset(
+                    widget.product.image,
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.topCenter,
+                  ),
+                ),
+              ),
+              Container(
+                // margin: EdgeInsets.only(top: size.height * 0.5),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: kDefaultPadding,
+                  vertical: kDefaultPadding / 1.5
+                ),
+                constraints: BoxConstraints(
+                  minHeight: viewportConstraints.maxHeight,
+                ),
+                decoration: const BoxDecoration(
+                  color: kBackgroundColor,
+                  // borderRadius: BorderRadius.only(
+                  //   topLeft: Radius.circular(24),
+                  //   topRight: Radius.circular(24),
+                  // ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          widget.product.title,
+                          style: const TextStyle(
+                            color: kTextLight,
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: kDefaultPadding / 2),
+                    const Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.account_circle,
+                          color: kTextOverlay,
+                        ),
+                        SizedBox(width: kDefaultPadding / 3),
+                        Text(
+                          "seller",
+                          style: TextStyle(
+                            color: kTextOverlay,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: kDefaultPadding / 3),
+                    Text(
+                      "\$${widget.product.price}",
+                      style: const TextStyle(
+                        color: kTextLight,
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: kDefaultPadding / 3),
+                    const Text(
+                      "Colors",
+                      style: TextStyle(
+                        color: kTextLight,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Row(
+                      children: List.generate(
+                        widget.product.color.length,
+                        (index) => GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              currentColorIndex = index;
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(2.0),
+                            margin: const EdgeInsets.fromLTRB(
+                              0.0,
+                              kDefaultPadding / 2,
+                              kDefaultPadding / 2,
+                              kDefaultPadding / 2,
+                            ),
+                            height: 25,
+                            width: 25,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.transparent,
+                              border: currentColorIndex == index
+                                ? Border.all(color: widget.product.color[index])
+                                : null,
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: widget.product.color[index],
+                              ),
+                            )
+                          )
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: kDefaultPadding / 2),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                        });
+                      },
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 40,
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: kDefaultPadding,
+                                vertical: kDefaultPadding / 2
+                              ),
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(20.0)
+                                ),
+                                color: kAddToCartColor,
+                              ),
+                              child: const Text(
+                                "Add to Cart",
+                                style: TextStyle(
+                                  color: kTextDark,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                        });
+                      },
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 40,
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: kDefaultPadding,
+                                vertical: kDefaultPadding / 2
+                              ),
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(20.0)
+                                ),
+                                color: kCheckOutColor,
+                              ),
+                              child: const Text(
+                                "Checkout",
+                                style: TextStyle(
+                                  color: kTextDark,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: kDefaultPadding),
+                    const Text(
+                      "Description",
+                      style: TextStyle(
+                        color: kTextLight,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
