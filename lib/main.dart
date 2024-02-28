@@ -128,57 +128,73 @@ class _MainState extends State<Main> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         // mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          IconButton(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-            onPressed: () => pageJump(0),
-            icon: currentPageIndex == 0 ?
-              buildNavigationIcon(const Icon(Icons.home), "Home", 0) :
-              buildNavigationIcon(const Icon(Icons.home_outlined), "Home", 0),
-            color: currentPageIndex == 0 ? kHighlightColor : kTextOverlay,
+          SizedBox(
+            height: 60,
+            width: 80,
+            child: IconButton(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+              onPressed: () => pageJump(0),
+              icon: currentPageIndex == 0 ?
+                buildNavigationIcon(const Icon(Icons.home), "Home", 0) :
+                buildNavigationIcon(const Icon(Icons.home_outlined), "Home", 0),
+              color: currentPageIndex == 0 ? kHighlightColor : kTextOverlay,
+            ),
           ),
-          IconButton(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-            onPressed: () => pageJump(1),
-            icon: currentPageIndex == 1 ?
-              buildNavigationIcon(const Icon(Icons.account_circle), "You", 1) :
-              buildNavigationIcon(const Icon(Icons.account_circle_outlined), "You", 1),
-            color: currentPageIndex == 1 ? kHighlightColor : kTextOverlay,
+          SizedBox(
+            height: 60,
+            width: 80,
+            child: IconButton(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+              onPressed: () => pageJump(1),
+              icon: currentPageIndex == 1 ?
+                buildNavigationIcon(const Icon(Icons.account_circle), "You", 1) :
+                buildNavigationIcon(const Icon(Icons.account_circle_outlined), "You", 1),
+              color: currentPageIndex == 1 ? kHighlightColor : kTextOverlay,
+            ),
           ),
-          IconButton(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-            onPressed: () => pageJump(2),
-            icon: currentPageIndex == 2 ?
-              buildNavigationIcon(
-                buildNotificationBadge(
-                  true,
-                  Icons.notifications_sharp,
-                  Colors.transparent
+          SizedBox(
+            height: 60,
+            width: 80,
+            child: IconButton(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+              onPressed: () => pageJump(2),
+              icon: currentPageIndex == 2 ?
+                buildNavigationIcon(
+                  buildNotificationBadge(
+                    true,
+                    Icons.notifications_sharp,
+                    Colors.transparent
+                  ),
+                  "Notification",
+                  2
+                ) :
+                buildNavigationIcon(
+                  buildNotificationBadge(
+                    true,
+                    Icons.notifications_outlined,
+                    kNotificationColor
+                  ),
+                  "Notification",
+                  2
                 ),
-                "Notification",
-                2
-              ) :
-              buildNavigationIcon(
-                buildNotificationBadge(
-                  true,
-                  Icons.notifications_outlined,
-                  kNotificationColor
-                ),
-                "Notification",
-                2
-              ),
-            color: currentPageIndex == 2 ? kHighlightColor : kTextOverlay,
+              color: currentPageIndex == 2 ? kHighlightColor : kTextOverlay,
+            ),
           ),
-          IconButton(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-            onPressed: () => pageJump(3),
-            icon: currentPageIndex == 3 ?
-              buildNavigationIcon(const Icon(Icons.search_rounded), "Search", 3) :
-              buildNavigationIcon(const Icon(Icons.search_outlined), "Search", 3),
-            color: currentPageIndex == 3 ? kHighlightColor : kTextOverlay,
+          SizedBox(
+            height: 60,
+            width: 80,
+            child: IconButton(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+              onPressed: () => pageJump(3),
+              icon: currentPageIndex == 3 ?
+                buildNavigationIcon(const Icon(Icons.search_rounded), "Search", 3) :
+                buildNavigationIcon(const Icon(Icons.search_outlined), "Search", 3),
+              color: currentPageIndex == 3 ? kHighlightColor : kTextOverlay,
+            ),
           ),
         ],
       )
@@ -194,7 +210,7 @@ class _MainState extends State<Main> {
           label,
           style: TextStyle(
             color: currentPageIndex == pageIndex ? kHighlightColor : kTextOverlay,
-            fontSize: 12.0,
+            fontSize: 10.0,
           ),
         ),
       ],

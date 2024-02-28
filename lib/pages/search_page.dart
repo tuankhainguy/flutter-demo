@@ -92,6 +92,9 @@ class _SearchState extends State<SearchPage> with AutomaticKeepAliveClientMixin 
               ),
               const SizedBox(width: kDefaultPadding / 2),
               GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                },
                 child: const Text(
                   "cancel",
                   style: TextStyle(
