@@ -135,10 +135,12 @@ class ItemPageBody extends StatefulWidget{
 
 class _ItemPageBodyState extends State<ItemPageBody> {
   int currentColorIndex = 0;
+  String addToCart = "Add to Cart";
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints viewportConstraints) {
         return SingleChildScrollView(
@@ -149,10 +151,33 @@ class _ItemPageBodyState extends State<ItemPageBody> {
                 padding: const EdgeInsets.all(kDefaultPadding),
                 child: SizedBox(
                   height: size.height * 0.4,
-                  child: Image.asset(
-                    widget.product.image,
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.topCenter,
+                  child: Stack(
+                    alignment: Alignment.bottomRight,
+                    children: <Widget>[
+                      Image.asset(
+                        widget.product.image,
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.topCenter,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            favourites.contains(widget.product)
+                              ? favourites.remove(widget.product)
+                              : favourites.add(widget.product);
+                          });
+                        },
+                        icon: favourites.contains(widget.product)
+                          ? const Icon(
+                            Icons.favorite,
+                              color: kTextDark,
+                          )
+                          : const Icon(
+                            Icons.favorite_outline,
+                              color: kTextDark,
+                          ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -231,7 +256,8 @@ class _ItemPageBodyState extends State<ItemPageBody> {
                               currentColorIndex = index;
                             });
                           },
-                          child: Container(
+                          child: AnimatedContainer(
+                            duration: Durations.short4,
                             padding: const EdgeInsets.all(2.0),
                             margin: const EdgeInsets.fromLTRB(
                               0.0,
@@ -261,8 +287,17 @@ class _ItemPageBodyState extends State<ItemPageBody> {
                     const SizedBox(height: kDefaultPadding / 2),
                     GestureDetector(
                       onTap: () {
-                        setState(() {
-                        });
+                        switch (addToCart) {
+                          case "Add to Cart":
+                            setState(() {
+                              addToCart = "Added";
+                            });
+                            cart.update(
+                              widget.product,
+                              (value) => ++value,
+                              ifAbsent: () => 1,
+                            );
+                        }
                       },
                       child: Row(
                         children: <Widget>[
@@ -280,9 +315,9 @@ class _ItemPageBodyState extends State<ItemPageBody> {
                                 ),
                                 color: kAddToCartColor,
                               ),
-                              child: const Text(
-                                "Add to Cart",
-                                style: TextStyle(
+                              child: Text(
+                                addToCart,
+                                style: const TextStyle(
                                   color: kTextDark,
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.bold,

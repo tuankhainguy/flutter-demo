@@ -16,27 +16,11 @@ class Product {
 }
 
 List<Product> hotDeals= [
-  Product(
-    id: 1,
-    title: "Blue handbag",
-    image: "assets/images/blue_handbag.png",
-    description: "First bag",
-    price: 100,
-    size: 10,
-    color: [Colors.blue, Colors.red],
-  ),
+  handbags[0],
 ];
 
 List<Product> newArrivals = [
-  Product(
-    id: 1,
-    title: "Blue handbag",
-    image: "assets/images/blue_handbag.png",
-    description: "First bag",
-    price: 100,
-    size: 10,
-    color: [Colors.blue, Colors.red],
-  ),
+  handbags[0],
 ];
 
 List<Product> handbags = [
@@ -151,3 +135,6 @@ List<Product> search = [
   ...mobile,
   ...accessories,
 ];
+
+List<Product> favourites = [];
+Map<Product, int> cart = {};

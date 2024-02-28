@@ -1,6 +1,8 @@
 import 'package:demo/constants.dart';
 import 'package:demo/pages/components/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:demo/models/product.dart';
+
 
 class CartPage extends StatefulWidget {
   final PageCallBack pageJump;
@@ -13,7 +15,7 @@ class CartPage extends StatefulWidget {
 class _CartState extends State<CartPage> with AutomaticKeepAliveClientMixin {
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,29 +23,118 @@ class _CartState extends State<CartPage> with AutomaticKeepAliveClientMixin {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: buildAppBar(widget.pageJump, 4),
-      body: const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          children: <Widget>[
-            Card(
-              child: ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
-                leading: Icon(Icons.shopping_bag),
-                title: Text('Purchase 1'),
-                subtitle: Text('This is a purchase'),
-                trailing: Icon(Icons.shopping_cart_checkout_rounded),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+          itemCount: cart.length,
+          itemBuilder: (BuildContext context, int index) => Card(
+            child: ListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
+              leading: SizedBox(
+                height: 40,
+                width: 40,
+                child: Image.asset(
+                  cart.keys.elementAt(index).image,
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.topCenter,
+                ),
+              ),
+              title: Text(
+                cart.keys.elementAt(index).title,
+                style: const TextStyle(
+                  color: kTextDark,
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    height: 20.0,
+                    width: 20.0,
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          cart.values.elementAt(index) > 1
+                            ? cart.update(
+                              cart.keys.elementAt(index),
+                              (value) => --value
+                            )
+                            : cart.remove(cart.keys.elementAt(index));
+                        });
+                      },
+                      icon: const Icon(
+                        Icons.remove,
+                        size: 15.0,
+                        color: kTextDark,
+                      ),
+                      padding: EdgeInsets.zero,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
+                    child: Text(cart.values.elementAt(index).toString()),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                    width: 20.0,
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          cart.update(
+                            cart.keys.elementAt(index),
+                            (value) => ++value
+                          );
+                        });
+                      },
+                      icon: const Icon(
+                        Icons.add,
+                        size: 15.0,
+                        color: kTextDark,
+                      ),
+                      padding: EdgeInsets.zero,
+                    ),
+                  ),
+                ],
+              ),
+              trailing: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 24.0,
+                    width: 24.0,
+                    child: IconButton(
+                      onPressed: () {},
+                      padding: EdgeInsets.zero,
+                      icon: const Icon(
+                        Icons.shopping_cart_checkout_rounded,
+                        size: 20.0,
+                        color: kTextDark,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 24.0,
+                    width: 24.0,
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          cart.remove(cart.keys.elementAt(index));
+                        });
+                      },
+                      padding: EdgeInsets.zero,
+                      icon: const Icon(
+                        Icons.close_rounded,
+                        size: 20.0,
+                        color: kTextDark,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            Card(
-              child: ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
-                leading: Icon(Icons.shopping_bag),
-                title: Text('Purchase 2'),
-                subtitle: Text('This is a purchase'),
-                trailing: Icon(Icons.shopping_cart_checkout_rounded),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
