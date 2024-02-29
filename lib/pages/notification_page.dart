@@ -23,10 +23,11 @@ class _NotificationState extends State<NotificationPage> with AutomaticKeepAlive
       backgroundColor: Colors.transparent,
       appBar: buildAppBar(widget.pageJump, 3),
       body: const Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(kDefaultPadding / 2),
         child: Column(
           children: <Widget>[
             Card(
+              color: kCardColor,
               child: ListTile(
                 leading: Icon(Icons.notifications_sharp),
                 title: Text('Notification 1'),
@@ -34,6 +35,7 @@ class _NotificationState extends State<NotificationPage> with AutomaticKeepAlive
               ),
             ),
             Card(
+              color: kCardColor,
               child: ListTile(
                 leading: Icon(Icons.notifications_sharp),
                 title: Text('Notification 2'),

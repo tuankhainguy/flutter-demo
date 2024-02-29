@@ -15,5 +15,6 @@ const kHighlightColor = Color(0xff89b4fa);
 const kNotificationColor = Color(0xfff38ba8);
 const kAddToCartColor = Color(0xff89b4fa);
 const kCheckOutColor = Color(0xffb4befe);
+const kCardColor = Color(0xfff5e0dc);
 
 const double kDefaultPadding = 20.0;

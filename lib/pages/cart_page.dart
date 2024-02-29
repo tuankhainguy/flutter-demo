@@ -71,7 +71,7 @@ class _CartState extends State<CartPage> with AutomaticKeepAliveClientMixin {
                               ],
                             ),
                           ),
-                          const SizedBox(height: kDefaultPadding * 1.5),
+                          // const SizedBox(height: kDefaultPadding * 1.5),
                           GestureDetector(
                             onTap: () {
                               setState(() {
@@ -125,7 +125,7 @@ class _CartState extends State<CartPage> with AutomaticKeepAliveClientMixin {
               child: ListView.builder(
                 itemCount: cart.length,
                 itemBuilder: (BuildContext context, int index) => Card(
-                  color: const Color(0xfff5e0dc),
+                  color: kCardColor,
                   child: ListTile(
                     contentPadding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
                     leading: SizedBox(

@@ -22,7 +22,126 @@ class _AccountState extends State<AccountPage> with AutomaticKeepAliveClientMixi
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: buildAppBar(widget.pageJump, 1),
-      body: const Column(),
+      body: ListView(
+        children: <Widget>[
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+            child: ListTile(
+              leading: Icon(
+                Icons.account_circle_rounded,
+                size: 45.0,
+                color: kTextLight,
+              ),
+              title: Text(
+                'Account',
+                style: TextStyle(
+                  color: kTextLight,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            color: kTextOverlay,
+            height: 2.0,
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: kDefaultPadding / 2
+            ),
+            child: ListTile(
+              leading: Icon(
+                Icons.favorite_rounded,
+                color: kTextLight,
+              ),
+              title: Text(
+                'Watchlist',
+                style: TextStyle(
+                  color: kTextLight,
+                  fontSize: 14.0,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            color: kTextOverlay,
+            height: 2.0,
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: kDefaultPadding / 2
+            ),
+            child: ListTile(
+              leading: Icon(
+                Icons.wallet,
+                color: kTextLight,
+              ),
+              title: Text(
+                'Payments',
+                style: TextStyle(
+                  color: kTextLight,
+                  fontSize: 14.0,
+                ),
+              ),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: kDefaultPadding / 2
+            ),
+            child: ListTile(
+              leading: Icon(
+                Icons.settings,
+                color: kTextLight,
+              ),
+              title: Text(
+                'Settings',
+                style: TextStyle(
+                  color: kTextLight,
+                  fontSize: 14.0,
+                ),
+              ),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: kDefaultPadding / 2
+            ),
+            child: ListTile(
+              leading: Icon(
+                Icons.help,
+                color: kTextLight,
+              ),
+              title: Text(
+                'Help',
+                style: TextStyle(
+                  color: kTextLight,
+                  fontSize: 14.0,
+                ),
+              ),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: kDefaultPadding / 2
+            ),
+            child: ListTile(
+              leading: Icon(
+                Icons.logout,
+                color: kTextLight,
+              ),
+              title: Text(
+                'Logout',
+                style: TextStyle(
+                  color: kTextLight,
+                  fontSize: 14.0,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
