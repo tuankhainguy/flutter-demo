@@ -21,11 +21,6 @@ AppBar buildAppBar(PageCallBack pageJump, int currentPageIndex,
         color: kTextLight,
       ),
     ) : null,
-    // IconButton(
-    //   onPressed: () {},
-    //   icon: const Icon(Icons.menu),
-    //   color: kTextLight,
-    // ) : null,
     actions: <Widget>[
       IconButton(
         onPressed: () => currentPageIndex == 4 ? null : pageJump(4),

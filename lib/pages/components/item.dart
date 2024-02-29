@@ -192,10 +192,6 @@ class _ItemPageBodyState extends State<ItemPageBody> {
                 ),
                 decoration: const BoxDecoration(
                   color: kBackgroundColor,
-                  // borderRadius: BorderRadius.only(
-                  //   topLeft: Radius.circular(24),
-                  //   topRight: Radius.circular(24),
-                  // ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
