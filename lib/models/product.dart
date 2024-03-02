@@ -128,7 +128,7 @@ List<Product> accessories = [
   ),
 ];
 
-List<Product> search = [
+List<Product> allItems = [
   ...handbags,
   ...backpacks,
   ...pc,

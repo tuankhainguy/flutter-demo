@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:demo/constants.dart';
+import 'package:demo/models/product.dart';
+
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -10,32 +12,25 @@ class SearchPage extends StatefulWidget {
 
 class _SearchState extends State<SearchPage> with AutomaticKeepAliveClientMixin {
 
-  bool doKeepAlive = false;
   String search = "";
-  late FocusNode focus;
+  List<Product> searchResults = [];
+  final TextEditingController textController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    focus = FocusNode();
+  void filter() {
+    search == "" ? searchResults.clear() : searchResults = allItems
+      .where((product) => product.title.toLowerCase().contains(search.toLowerCase()))
+      .toList();
   }
 
   @override
-  void dispose() {
-    focus.dispose();
-    super.dispose();
-  }
-
-  void focusTextField() {
-    search == "" ? focus.requestFocus : null;
-  }
-
-  @override
-  bool get wantKeepAlive => doKeepAlive;
+  bool get wantKeepAlive => search == "" ? false : true;
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
+    updateKeepAlive();
+
     return Column(
       children: <Widget>[
         Padding(
@@ -63,9 +58,10 @@ class _SearchState extends State<SearchPage> with AutomaticKeepAliveClientMixin 
                           onChanged: (input) {
                             setState(() {
                               search = input;
+                              filter();
                             });
                           },
-                          focusNode: focus,
+                          controller: textController,
                           autofocus: true,
                           decoration: const InputDecoration(
                             isDense: true,
@@ -86,6 +82,21 @@ class _SearchState extends State<SearchPage> with AutomaticKeepAliveClientMixin 
                           ),
                         ),
                       ),
+                      const SizedBox(width: kDefaultPadding / 3),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            textController.clear();
+                            search = "";
+                            filter();
+                          });
+                        },
+                        child: Icon(
+                          search == "" ? null : Icons.cancel_rounded,
+                          color: kTextLight,
+                          size: 16.0,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -104,6 +115,40 @@ class _SearchState extends State<SearchPage> with AutomaticKeepAliveClientMixin 
                 ),
               ),
             ],
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: searchResults.length,
+            itemBuilder: (BuildContext context, int index) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
+                child: Card(
+                color: kLightBackgroundColor,
+                child: ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
+                  leading: SizedBox(
+                    height: 40,
+                    width: 40,
+                    child: Image.asset(
+                      searchResults[index].image,
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.topCenter,
+                    ),
+                  ),
+                  title: Text(
+                    searchResults[index].title,
+                    style: const TextStyle(
+                      color: kTextDark,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    "\$${searchResults[index].price}",
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ],

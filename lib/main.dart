@@ -66,8 +66,8 @@ class _MainState extends State<Main> {
 
   void pageJump(int selectedPageIndex) {
     setState(() {
-      currentPageIndex = selectedPageIndex;
       pageController.jumpToPage(selectedPageIndex);
+      currentPageIndex = selectedPageIndex;
     });
   }
 
