@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:demo/constants.dart';
 import 'package:demo/models/product.dart';
+import 'package:demo/pages/check_out_page.dart';
 
 
 class ItemGrid extends StatelessWidget {
@@ -281,81 +282,81 @@ class _ItemPageBodyState extends State<ItemPageBody> {
                       ),
                     ),
                     const SizedBox(height: kDefaultPadding / 2),
-                    GestureDetector(
-                      onTap: () {
-                        switch (addToCart) {
-                          case "Add to Cart":
-                            setState(() {
-                              addToCart = "Added";
-                            });
-                            cart.update(
-                              widget.product,
-                              (value) => ++value,
-                              ifAbsent: () => 1,
-                            );
-                        }
-                      },
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 40,
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: kDefaultPadding,
-                                vertical: kDefaultPadding / 2
-                              ),
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(20.0)
-                                ),
-                                color: kAddToCartColor,
-                              ),
-                              child: Text(
-                                addToCart,
-                                style: const TextStyle(
-                                  color: kTextDark,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: kDefaultPadding,
+                        vertical: kDefaultPadding / 2
+                      ),
+                      child: SizedBox(
+                        height: 40,
+                        width: double.infinity,
+                        child: FilledButton(
+                          onPressed: () {
+                            switch (addToCart) {
+                              case "Add to Cart":
+                                setState(() {
+                                  addToCart = "Added";
+                                });
+                                cart.update(
+                                  widget.product,
+                                  (value) => ++value,
+                                  ifAbsent: () => 1,
+                                );
+                            }
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+                              (Set<MaterialState> states) {
+                                return kAddToCartColor.withOpacity(1.0);
+                              },
                             ),
                           ),
-                        ],
+                          child: Text(
+                            addToCart,
+                            style: const TextStyle(
+                              color: kTextDark,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: kDefaultPadding,
+                        vertical: kDefaultPadding / 2
+                      ),
+                      child: SizedBox(
+                        height: 40,
+                        width: double.infinity,
+                        child: FilledButton(
+                          onPressed: () {
+                            setState(() {
+                              checkout.update(
+                                widget.product,
+                                (value) => ++value,
+                                ifAbsent: () => 1,
+                              );
+                              checkOut(context);
                         });
-                      },
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 40,
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: kDefaultPadding,
-                                vertical: kDefaultPadding / 2
-                              ),
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(20.0)
-                                ),
-                                color: kCheckOutColor,
-                              ),
-                              child: const Text(
-                                "Checkout",
-                                style: TextStyle(
-                                  color: kTextDark,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+                              (Set<MaterialState> states) {
+                                return kCheckOutColor.withOpacity(1.0);
+                              },
                             ),
                           ),
-                        ],
+                          child: const Text(
+                            "Buy now",
+                            style: TextStyle(
+                              color: kTextDark,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(height: kDefaultPadding),

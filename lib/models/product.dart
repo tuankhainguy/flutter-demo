@@ -138,3 +138,4 @@ List<Product> search = [
 
 List<Product> favourites = [];
 Map<Product, int> cart = {};
+Map<Product, int> checkout = {};

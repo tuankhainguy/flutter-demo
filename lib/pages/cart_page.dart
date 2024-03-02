@@ -1,8 +1,8 @@
 import 'package:demo/constants.dart';
-import 'package:demo/main.dart';
 import 'package:demo/pages/components/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:demo/models/product.dart';
+import 'package:demo/pages/check_out_page.dart';
 
 
 class CartPage extends StatefulWidget {
@@ -72,46 +72,45 @@ class _CartState extends State<CartPage> with AutomaticKeepAliveClientMixin {
                             ),
                           ),
                           // const SizedBox(height: kDefaultPadding * 1.5),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                              });
-                            },
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    height: 40,
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: kDefaultPadding,
-                                      vertical: kDefaultPadding / 2
-                                    ),
-                                    decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(20.0)
-                                      ),
-                                      color: kCheckOutColor,
-                                    ),
-                                    child: RichText(
-                                      text: TextSpan(
-                                        text: "Checkout ",
-                                        style: const TextStyle(
-                                          fontSize: 16.0,
-                                          color: kTextDark,
-                                        ),
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                            text: "(${cart.values.fold(
-                                              0, (prev, curr) => prev + curr
-                                            )})",
-                                          )
-                                        ],
-                                      ),
-                                    ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: kDefaultPadding,
+                              vertical: kDefaultPadding / 2
+                            ),
+                            child: SizedBox(
+                              height: 40,
+                              width: double.infinity,
+                              child: FilledButton(
+                                onPressed: () {
+                                  setState(() {
+                                    checkout.addAll(cart);
+                                    checkOut(context);
+                                  });
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+                                    (Set<MaterialState> states) {
+                                      return kCheckOutColor.withOpacity(1.0);
+                                    },
                                   ),
                                 ),
-                              ],
+                                child: RichText(
+                                  text: TextSpan(
+                                    text: "Checkout ",
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      color: kTextDark,
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: "(${cart.values.fold(
+                                          0, (prev, curr) => prev + curr
+                                        )})",
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -203,7 +202,12 @@ class _CartState extends State<CartPage> with AutomaticKeepAliveClientMixin {
                           height: 24.0,
                           width: 24.0,
                           child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                checkout[cart.keys.elementAt(index)] = cart.values.elementAt(index);
+                                checkOut(context);
+                              });
+                            },
                             padding: EdgeInsets.zero,
                             icon: const Icon(
                               Icons.shopping_cart_checkout_rounded,
