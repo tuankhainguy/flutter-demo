@@ -97,7 +97,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           ),
                         ),
                         Text(
-                          "Price: ${
+                          "Price: \$${
                             checkout.keys.elementAt(index).price
                             * checkout.values.elementAt(index)
                           }",

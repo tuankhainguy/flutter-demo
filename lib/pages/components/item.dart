@@ -201,26 +201,15 @@ class _ItemPageState extends State<ItemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kLightBackgroundColor,
-      // appBar: buildAppBar(widget.pageJump, 0, true, widget.returnHome),
-      body: ItemPageBody(
-        pageJump: widget.pageJump,
-        product: widget.product,
-        returnHome: widget.returnHome,
-      ),
+      appBar: buildAppBar(widget.pageJump, 0, true, widget.returnHome),
+      body: ItemPageBody(product: widget.product),
     );
   }
 }
 
 class ItemPageBody extends StatefulWidget{
-  final PageCallBack pageJump;
   final Product product;
-  final ViewCallBack returnHome;
-  const ItemPageBody({
-    Key? key,
-    required this.pageJump,
-    required this.product,
-    required this.returnHome,
-  }) : super(key: key);
+  const ItemPageBody({Key? key, required this.product}) : super(key: key);
 
   @override
   State<ItemPageBody> createState() => _ItemPageBodyState();
@@ -240,15 +229,13 @@ class _ItemPageBodyState extends State<ItemPageBody> {
           child: Column(
             // crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Stack(
-                alignment: Alignment.topCenter,
-                children: <Widget>[
-                  buildAppBar(widget.pageJump, 0, true, widget.returnHome),
-                  Padding(
-                    padding: const EdgeInsets.all(kDefaultPadding),
-                    child: SizedBox(
-                      height: size.height * 0.4,
-                      child: Stack(
+              Padding(
+                padding: const EdgeInsets.all(kDefaultPadding),
+                child: SizedBox(
+                  height: size.height * 0.4,
+                  child: Stack(
+                    children: <Widget>[
+                      Stack(
                         alignment: Alignment.bottomRight,
                         children: <Widget>[
                           Image.asset(
@@ -276,9 +263,9 @@ class _ItemPageBodyState extends State<ItemPageBody> {
                           ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
               Container(
                 // margin: EdgeInsets.only(top: size.height * 0.5),

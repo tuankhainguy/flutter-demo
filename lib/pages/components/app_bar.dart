@@ -4,13 +4,11 @@ import 'package:demo/constants.dart';
 
 AppBar buildAppBar(PageCallBack pageJump, [int? currentPageIndex,
                     bool? viewingProduct, ViewCallBack? returnHome]){
-  Color bgColor;
   Color textColor;
   Widget? leading;
   Widget? title;
 
   if (viewingProduct == true) {
-    bgColor = Colors.transparent;
     textColor = kTextDark;
     leading = IconButton(
       onPressed: () => returnHome != null ? returnHome() : null,
@@ -20,7 +18,6 @@ AppBar buildAppBar(PageCallBack pageJump, [int? currentPageIndex,
       )
     );
   } else {
-    bgColor = kBackgroundColor;
     textColor = kTextLight;
     title = const Text(
       "Demo",
@@ -32,7 +29,7 @@ AppBar buildAppBar(PageCallBack pageJump, [int? currentPageIndex,
   }
 
   return AppBar(
-    backgroundColor: bgColor,
+    backgroundColor: Colors.transparent,
     title: title,
     centerTitle: true,
     leading: leading,
