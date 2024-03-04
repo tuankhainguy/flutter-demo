@@ -1,16 +1,96 @@
+import 'package:demo/pages/components/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:demo/constants.dart';
 import 'package:demo/models/product.dart';
+import 'package:demo/pages/components/item.dart';
 
+
+typedef SearchCallBack = void Function(bool);
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  final PageCallBack pageJump;
+  const SearchPage({Key? key, required this.pageJump}) : super(key: key);
 
   @override
   State<SearchPage> createState() => _SearchState();
 }
 
-class _SearchState extends State<SearchPage> with AutomaticKeepAliveClientMixin {
+class _SearchState extends State<SearchPage> {
+
+  late PageController itemViewer;
+  late List<Widget> views;
+  bool viewing = false;
+  final int homePageIndex = 0;
+  final int itemPageIndex = 1;
+
+  void addItem(Widget widget) {
+    views.add(widget);
+  }
+
+  void itemView() {
+    setState(() {
+      itemViewer.animateToPage(
+        itemPageIndex,
+        duration: Durations.short4,
+        curve: Curves.easeInOut,
+      );
+      viewing = true;
+    });
+  }
+
+  void returnHome() {
+    setState(() {
+      itemViewer.animateToPage(
+        homePageIndex,
+        duration: Durations.short4,
+        curve: Curves.easeInOut,
+      );
+      views.length > 1 ? views.removeLast() : null;
+      viewing = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    itemViewer = PageController(initialPage: homePageIndex);
+    views = [
+      SearchView(
+        pageJump: widget.pageJump,
+        addItem: addItem,
+        itemView: itemView,
+        returnHome: returnHome,
+      ),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PageView(
+      controller: itemViewer,
+      children: views,
+    );
+  }
+}
+
+class SearchView extends StatefulWidget {
+  final PageCallBack pageJump;
+  final ViewSetState addItem;
+  final ViewCallBack itemView, returnHome;
+  const SearchView({
+    Key? key,
+    required this.pageJump,
+    required this.addItem,
+    required this.itemView,
+    required this.returnHome,
+  }) : super(key: key);
+
+  @override
+  State<SearchView> createState() => _SearchViewState();
+}
+
+class _SearchViewState extends State<SearchView> with AutomaticKeepAliveClientMixin {
 
   String search = "";
   List<Product> searchResults = [];
@@ -34,7 +114,12 @@ class _SearchState extends State<SearchPage> with AutomaticKeepAliveClientMixin 
     return Column(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(kDefaultPadding),
+          padding: const EdgeInsets.fromLTRB(
+            kDefaultPadding,
+            kDefaultPadding,
+            kDefaultPadding,
+            0,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
@@ -118,37 +203,12 @@ class _SearchState extends State<SearchPage> with AutomaticKeepAliveClientMixin 
           ),
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: searchResults.length,
-            itemBuilder: (BuildContext context, int index) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
-                child: Card(
-                color: kLightBackgroundColor,
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
-                  leading: SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: Image.asset(
-                      searchResults[index].image,
-                      fit: BoxFit.scaleDown,
-                      alignment: Alignment.topCenter,
-                    ),
-                  ),
-                  title: Text(
-                    searchResults[index].title,
-                    style: const TextStyle(
-                      color: kTextDark,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    "\$${searchResults[index].price}",
-                  ),
-                ),
-              ),
-            ),
+          child: ItemList(
+            pageJump: widget.pageJump,
+            products: searchResults,
+            addItem: widget.addItem,
+            itemView: widget.itemView,
+            returnHome: widget.returnHome
           ),
         ),
       ],

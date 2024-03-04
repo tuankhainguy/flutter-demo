@@ -53,7 +53,7 @@ class _MainState extends State<Main> {
       HomePage(pageJump: pageJump),
       AccountPage(pageJump: pageJump),
       NotificationPage(pageJump: pageJump),
-      const SearchPage(),
+      SearchPage(pageJump: pageJump),
       CartPage(pageJump: pageJump),
     ];
   }
@@ -75,7 +75,6 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      // appBar: [0, 1, 2, 4].contains(currentPageIndex) ? buildAppBar() : null,
       extendBody: true,
       body: PageView(
         controller: pageController,
@@ -83,37 +82,6 @@ class _MainState extends State<Main> {
         children: pages,
       ),
       bottomNavigationBar: buildBottomAppBar(),
-      // body: pages[currentPageIndex],
-    );
-  }
-
-  AppBar buildAppBar() {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      toolbarHeight: 50.0,
-      title: const Text(
-        "Demo",
-        style: TextStyle(
-          color: kTextLight,
-          fontSize: 24.0,
-        ),
-      ),
-      centerTitle: true,
-      // leading: IconButton(
-      //   onPressed: () {},
-      //   icon: const Icon(Icons.menu),
-      //   color: kTextLight,
-      // ),
-      actions: <Widget>[
-        IconButton(
-          onPressed: () => pageJump(4),
-          icon: currentPageIndex == 4 ?
-            const Icon(Icons.shopping_cart) :
-            const Icon(Icons.shopping_cart_outlined),
-          color: kTextLight,
-        ),
-        const SizedBox(width: kDefaultPadding / 2),
-      ],
     );
   }
 

@@ -6,8 +6,9 @@ import 'package:demo/models/product.dart';
 void checkOut(BuildContext context) {
   checkout.isNotEmpty ? showModalBottomSheet(
     isScrollControlled: true,
-    backgroundColor: kBaseColor,
+    backgroundColor: kBackgroundColor,
     useSafeArea: true,
+    constraints: const BoxConstraints.expand(),
     context: context,
     builder: (ctx) => const CheckOutPage(),
   ) : null;
@@ -29,7 +30,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
     cart.forEach((key, value) => subTotal += key.price * value);
 
     return Scaffold(
-      backgroundColor: kBaseColor,
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
         centerTitle: true,
         automaticallyImplyLeading: false,
@@ -114,7 +115,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        height: 85,
+        height: 100,
         color: Colors.transparent,
         padding: const EdgeInsets.symmetric(
           vertical: kDefaultPadding / 4,
@@ -123,12 +124,15 @@ class _CheckOutPageState extends State<CheckOutPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            Text(
-              "\$$subTotal",
-              style: const TextStyle(
-                color: kTextLight,
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 4),
+                child: Text(
+                "\$$subTotal",
+                style: const TextStyle(
+                  color: kTextLight,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                ),
               ),
             ),
             const SizedBox(height: kDefaultPadding / 4),
@@ -156,9 +160,6 @@ class _CheckOutPageState extends State<CheckOutPage> {
           ],
         ),
       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }

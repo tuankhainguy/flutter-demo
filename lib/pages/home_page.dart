@@ -75,13 +75,9 @@ class _HomeState extends State<HomePage> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: buildAppBar(widget.pageJump, 0, viewing, returnHome),
-      body: PageView(
-        controller: itemViewer,
-        children: views,
-      ),
+    return PageView(
+      controller: itemViewer,
+      children: views,
     );
   }
 }
@@ -100,12 +96,21 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        buildSearchBar(),
-        const SizedBox(height: kDefaultPadding / 1.5),
-        Categories(addItem: addItem, itemView: itemView, returnHome: returnHome,),
-      ]
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: buildAppBar(pageJump, 0, false, returnHome),
+      body: Column(
+        children: <Widget>[
+          buildSearchBar(),
+          const SizedBox(height: kDefaultPadding / 1.5),
+          Categories(
+            pageJump: pageJump,
+            addItem: addItem,
+            itemView: itemView,
+            returnHome: returnHome
+          ),
+        ]
+      ),
     );
   }
 
@@ -147,10 +152,12 @@ class HomeView extends StatelessWidget {
 }
 
 class Categories extends StatefulWidget {
+  final PageCallBack pageJump;
   final ViewSetState addItem;
   final ViewCallBack itemView, returnHome;
   const Categories({
     Key? key,
+    required this.pageJump,
     required this.addItem,
     required this.itemView,
     required this.returnHome,
@@ -200,6 +207,7 @@ class _CategoriesState extends State<Categories> with AutomaticKeepAliveClientMi
               child: TabBarView(
                 children: categories.values.map(
                   (list) => ItemGrid(
+                    pageJump: widget.pageJump,
                     products: list,
                     addItem: widget.addItem,
                     itemView: widget.itemView,
