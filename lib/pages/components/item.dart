@@ -5,9 +5,11 @@ import 'package:demo/pages/check_out_page.dart';
 import 'package:demo/pages/components/app_bar.dart';
 
 
-typedef CardType = int;
-const int gridCard = 0;
-const int listCard = 1;
+enum View {
+  gridCard,
+  listCard,
+}
+typedef CardType = View;
 
 class ItemGrid extends StatelessWidget {
   final PageCallBack pageJump;
@@ -37,7 +39,7 @@ class ItemGrid extends StatelessWidget {
         ),
         itemBuilder: (context, index) => ItemCard(
           pageJump: pageJump,
-          type: gridCard,
+          type: View.gridCard,
           product: products[index],
           addItem: addItem,
           itemView: itemView,
@@ -72,7 +74,7 @@ class ItemList extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
           child: ItemCard(
             pageJump: pageJump,
-            type: listCard,
+            type: View.listCard,
             product: products[index],
             addItem: addItem,
             itemView: itemView,
@@ -176,7 +178,7 @@ class ItemCard extends StatelessWidget {
             ),
           ),
         ),
-      ][type],
+      ][type.index],
     );
   }
 }

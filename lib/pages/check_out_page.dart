@@ -115,7 +115,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        height: 100,
+        height: 120,
         color: Colors.transparent,
         padding: const EdgeInsets.symmetric(
           vertical: kDefaultPadding / 4,
@@ -123,19 +123,17 @@ class _CheckOutPageState extends State<CheckOutPage> {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 4),
-                child: Text(
-                "\$$subTotal",
-                style: const TextStyle(
-                  color: kTextLight,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
-                ),
+            Text(
+              "\$$subTotal",
+              style: const TextStyle(
+                color: kTextLight,
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0,
               ),
             ),
-            const SizedBox(height: kDefaultPadding / 4),
+            const SizedBox(height: kDefaultPadding / 2),
             SizedBox(
               width: double.infinity,
                 child: FilledButton(
